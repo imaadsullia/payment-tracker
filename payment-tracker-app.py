@@ -1,37 +1,26 @@
-import streamlit
-
-import pandas as pd
-import numpy as np
 import streamlit as st
+import pandas as pd
 import gspread
 from google.oauth2.service_account import Credentials
+from oauth2client.service_account import ServiceAccountCredentials
 
-# Define the scope (permissions)
-scope = ["https://www.googleapis.com/auth/spreadsheets",
-         "https://www.googleapis.com/auth/drive"]
+# Load credentials from Streamlit Secrets
+creds = Credentials.from_service_account_info(
+    st.secrets["gcp_service_account"],
+    scopes=["https://www.googleapis.com/auth/spreadsheets",
+            "https://www.googleapis.com/auth/drive"]
+)
 
-# Load service account credentials
-creds = Credentials.from_service_account_file("payments.json", scopes=scope)
-
-# Authorize client
 client = gspread.authorize(creds)
 
 # Open your Google Sheet
 sheet = client.open("payments").sheet1
 
-# Example: Get all data
+# Convert sheet data to DataFrame
 data = sheet.get_all_records()
 df = pd.DataFrame(data)
-print(df.head())
 
-# Streamlit app
 st.title("🚍 Payment Tracker")
-st.write("All customer payment records:")
 
-# Display DataFrame in Streamlit
+st.write("Here are the current payments:")
 st.dataframe(df)
-
-
-
-
-
