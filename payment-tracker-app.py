@@ -41,7 +41,7 @@ try:
     client = gspread.authorize(creds)
     
     sheet = client.open_by_key("1XyGg-tP6F1K9eB7P1Y0B8D9E0G2F5A3B4C5D6E7F8")
-    worksheet = sheet.worksheet("Payments")
+    worksheet = sheet.worksheet("payments")
     
     st.title('Payment Tracker')
     st.header('Track your payments in Google Sheets')
