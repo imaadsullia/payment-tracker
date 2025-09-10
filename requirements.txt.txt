@@ -1,6 +1,5 @@
 streamlit
 pandas
-gspread
+gspread-dataframe
 google-auth
 oauth2client
-# Final check
